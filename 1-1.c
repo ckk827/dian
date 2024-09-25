@@ -18,4 +18,5 @@ int main()
 	putchar(32);
 	printf("%d", c);
 	getchar();
+	return 0;
 }
