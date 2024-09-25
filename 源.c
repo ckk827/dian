@@ -142,7 +142,7 @@ void enter(char* namep2,int* tunnelp2,int* pricep2,int* numberp2)
 		}
 
 	}
-	int error = scanf(" %d %d %d",  tunnelp2, pricep2, numberp2);
+	int error = scanf(" %d %d %d",  tunnelp2, pricep2, numberp2);//错误处理
 	getchar();
 	if (error != 3)
 	{
@@ -170,7 +170,10 @@ void write(char name2, int tunnel2, int price2, int number2)
 		fp2 = fopen("g.txt", "a");
 		fseek(fp2, 0, SEEK_SET);
 	}
-	fputs("\n", fp2);
+	if (tunnel2 != 1)
+	{
+		fputs("\n", fp2);
+	}
 	/*for (int i = tunnel2;i>1; i--)
 	{
 		fputs("\n", fp2);
@@ -241,6 +244,7 @@ void buy(int* totalp2,int* arr)
 	char buyname;
 	int buytunnel;
 	int buynum;
+	int num1=0;
 	struct goods
 	{
 		char gname;
@@ -248,9 +252,24 @@ void buy(int* totalp2,int* arr)
 		int gnum;
 		int gprice;
 	}tunnel1, tunnel2, tunnel3, tunnel4, tunnel5;
+	for (int i = 0; i < 5; i++)
+	{
+		fp3 = fopen("g.txt", "r");
+		if (fgets(fp4, 100, fp3) != NULL)        //文件为空时
+		{
+			num1++;
+		}
+	}
+	if (num1 == 0)
+	{
+		printf("当前无商品摆放\n");
+		fclose(fp3);
+		main();
+	}
+	fclose(fp3);
 	fp3 = fopen("g.txt", "r");
 	rewind(fp3);
-	for (int i = 1; i < 6; i++)
+	for (int i = 1; i < 6; i++)//-----读取数据并储存
 	{
 		switch (i)
 		{
@@ -343,24 +362,22 @@ void buy(int* totalp2,int* arr)
 						switch (buytunnel)
 						{
 						case 1:
-							break;
+							
 							*totalp = tunnel1.gprice * buynum + *totalp;
-							tunnel1.gnum = tunnel1.gnum - buynum;
+							break;
 						case 2:
 							*totalp = tunnel2.gprice * buynum + *totalp;
-							tunnel2.gnum = tunnel2.gnum - buynum;
 							break;
 						case 3:
 							*totalp = tunnel3.gprice * buynum + *totalp;
-							tunnel3.gnum = tunnel3.gnum - buynum;
 							break;
 						case 4:
 							*totalp = tunnel4.gprice * buynum + *totalp;
-							tunnel4.gnum = tunnel4.gnum - buynum;
+							
 							break;
 						case 5:
 							*totalp = tunnel5.gprice * buynum + *totalp;
-							tunnel5.gnum = tunnel5.gnum - buynum;
+							
 							break;
 						}
 
